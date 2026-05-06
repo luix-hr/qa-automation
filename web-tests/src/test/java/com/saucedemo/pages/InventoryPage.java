@@ -3,6 +3,7 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class InventoryPage extends BasePage {
@@ -22,13 +23,15 @@ public class InventoryPage extends BasePage {
         return text(title).equalsIgnoreCase("Products");
     }
 
-    public InventoryPage addToCart(String productName) {
-        String slug = productName.toLowerCase().replace(" ", "-");
-        By addBtn = By.id("add-to-cart-" + slug);
-        By removeBtn = By.id("remove-" + slug);
+    public InventoryPage addToCart(String productId) {
+        By addButton = By.id("add-to-cart-" + productId);
+        By removeButton = By.id("remove-" + productId);
 
-        click(addBtn);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(removeBtn));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(addButton));
+        button.click();
+        wait.until(ExpectedConditions.stalenessOf(button));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(removeButton));
+
         return this;
     }
 
