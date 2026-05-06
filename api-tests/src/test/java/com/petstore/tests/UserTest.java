@@ -22,7 +22,7 @@ class UserTest {
     }
 
     @Test
-    @Order(1)
+    @org.junit.jupiter.api.Order(1)
     @DisplayName("POST /user creates a new user")
     void shouldCreateUser() {
         Response response = client.create(user);
@@ -32,7 +32,7 @@ class UserTest {
     }
 
     @Test
-    @Order(2)
+    @org.junit.jupiter.api.Order(2)
     @DisplayName("GET /user/{username} returns the created user")
     void shouldGetUserByUsername() {
         Response response = client.getByUsername(user.getUsername());
@@ -44,7 +44,7 @@ class UserTest {
     }
 
     @Test
-    @Order(3)
+    @org.junit.jupiter.api.Order(3)
     @DisplayName("GET /user/login authenticates the user")
     void shouldLoginUser() {
         Response response = client.login(user.getUsername(), user.getPassword());
@@ -54,7 +54,7 @@ class UserTest {
     }
 
     @Test
-    @Order(4)
+    @org.junit.jupiter.api.Order(4)
     @DisplayName("PUT /user/{username} updates the user")
     void shouldUpdateUser() {
         user.setFirstName("UpdatedName");
@@ -64,7 +64,7 @@ class UserTest {
     }
 
     @Test
-    @Order(5)
+    @org.junit.jupiter.api.Order(5)
     @DisplayName("GET /user/logout returns success")
     void shouldLogoutUser() {
         Response response = client.logout();
@@ -74,7 +74,7 @@ class UserTest {
     }
 
     @Test
-    @Order(6)
+    @org.junit.jupiter.api.Order(6)
     @DisplayName("DELETE /user/{username} removes the user")
     void shouldDeleteUser() {
         Response response = client.delete(user.getUsername());
@@ -83,7 +83,7 @@ class UserTest {
     }
 
     @Test
-    @Order(7)
+    @org.junit.jupiter.api.Order(7)
     @DisplayName("GET /user/{username} returns 404 for non-existent user")
     void shouldReturn404ForUnknownUser() {
         Response response = client.getByUsername("nonexistent_" + DataFactory.randomId());

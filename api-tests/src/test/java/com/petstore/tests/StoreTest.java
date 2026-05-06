@@ -28,7 +28,7 @@ class StoreTest {
     }
 
     @Test
-    @Order(1)
+    @org.junit.jupiter.api.Order(1)
     @DisplayName("GET /store/inventory returns inventory map")
     void shouldGetInventory() {
         Response response = storeClient.getInventory();
@@ -38,7 +38,7 @@ class StoreTest {
     }
 
     @Test
-    @Order(2)
+    @org.junit.jupiter.api.Order(2)
     @DisplayName("POST /store/order places a new order")
     void shouldPlaceOrder() {
         Response response = storeClient.placeOrder(order);
@@ -51,7 +51,7 @@ class StoreTest {
     }
 
     @Test
-    @Order(3)
+    @org.junit.jupiter.api.Order(3)
     @DisplayName("GET /store/order/{id} returns the placed order")
     void shouldGetOrderById() {
         Response response = storeClient.getOrderById(order.getId());
@@ -61,7 +61,7 @@ class StoreTest {
     }
 
     @Test
-    @Order(4)
+    @org.junit.jupiter.api.Order(4)
     @DisplayName("DELETE /store/order/{id} removes the order")
     void shouldDeleteOrder() {
         Response response = storeClient.deleteOrder(order.getId());
@@ -70,7 +70,7 @@ class StoreTest {
     }
 
     @Test
-    @Order(5)
+    @org.junit.jupiter.api.Order(5)
     @DisplayName("GET /store/order/{id} returns 404 after deletion")
     void shouldReturn404AfterDeletion() {
         Response response = storeClient.getOrderById(order.getId());

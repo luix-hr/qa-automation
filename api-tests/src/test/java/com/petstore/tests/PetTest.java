@@ -22,7 +22,7 @@ class PetTest {
     }
 
     @Test
-    @Order(1)
+    @org.junit.jupiter.api.Order(1)
     @DisplayName("POST /pet creates a new pet")
     void shouldCreatePet() {
         Response response = client.create(pet);
@@ -35,7 +35,7 @@ class PetTest {
     }
 
     @Test
-    @Order(2)
+    @org.junit.jupiter.api.Order(2)
     @DisplayName("GET /pet/{id} returns the created pet")
     void shouldGetPetById() {
         Response response = client.getById(pet.getId());
@@ -45,7 +45,7 @@ class PetTest {
     }
 
     @Test
-    @Order(3)
+    @org.junit.jupiter.api.Order(3)
     @DisplayName("PUT /pet updates pet status to sold")
     void shouldUpdatePet() {
         pet.setStatus("sold");
@@ -56,7 +56,7 @@ class PetTest {
     }
 
     @Test
-    @Order(4)
+    @org.junit.jupiter.api.Order(4)
     @DisplayName("GET /pet/findByStatus returns list of pets")
     void shouldFindPetsByStatus() {
         Response response = client.findByStatus("available");
@@ -66,7 +66,7 @@ class PetTest {
     }
 
     @Test
-    @Order(5)
+    @org.junit.jupiter.api.Order(5)
     @DisplayName("DELETE /pet/{id} removes the pet")
     void shouldDeletePet() {
         Response response = client.delete(pet.getId());
@@ -75,7 +75,7 @@ class PetTest {
     }
 
     @Test
-    @Order(6)
+    @org.junit.jupiter.api.Order(6)
     @DisplayName("GET /pet/{id} returns 404 after deletion")
     void shouldReturn404AfterDeletion() {
         Response response = client.getById(pet.getId());
