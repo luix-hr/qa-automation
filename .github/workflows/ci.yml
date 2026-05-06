@@ -1,0 +1,73 @@
+name: CI - QA Automation
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    name: Petstore API Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run API tests
+        working-directory: ./api-tests
+        run: mvn -B test
+
+      - name: Upload API test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-reports
+          path: api-tests/target/surefire-reports/
+
+  web-tests:
+    name: SauceDemo Web Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Run Web tests (headless)
+        working-directory: ./web-tests
+        run: mvn -B test -Pci
+
+      - name: Upload Web test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-test-reports
+          path: web-tests/target/surefire-reports/
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-screenshots
+          path: web-tests/target/screenshots/
