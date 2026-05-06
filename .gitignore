@@ -1,0 +1,23 @@
+# Maven
+target/
+.mvn/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Selenium
+geckodriver.log
+chromedriver.log
