@@ -73,7 +73,7 @@ qa-automation/
 ## Instalação
 
 ```bash
-git clone https://github.com/<seu-usuario>/qa-automation.git
+git clone https://github.com/luix-hr/qa-automation
 cd qa-automation
 mvn clean install -DskipTests
 ```
