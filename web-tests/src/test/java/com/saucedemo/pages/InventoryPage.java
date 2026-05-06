@@ -5,6 +5,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class InventoryPage extends BasePage {
 
@@ -23,14 +26,15 @@ public class InventoryPage extends BasePage {
         return text(title).equalsIgnoreCase("Products");
     }
 
-    public InventoryPage addToCart(String productId) {
-        By addButton = By.id("add-to-cart-" + productId);
-        By removeButton = By.id("remove-" + productId);
+    public InventoryPage addToCart(String itemId) {
+        By addButton = By.id("add-to-cart-" + itemId);
+        driver.findElement(addButton).click();
 
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(addButton));
-        button.click();
-        wait.until(ExpectedConditions.stalenessOf(button));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(removeButton));
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.or(
+                        ExpectedConditions.textToBe(By.id("remove-" + itemId), "Remove"),
+                        ExpectedConditions.presenceOfElementLocated(By.id("remove-" + itemId))
+                ));
 
         return this;
     }

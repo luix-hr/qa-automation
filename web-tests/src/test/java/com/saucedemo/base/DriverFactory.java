@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DriverFactory {
 
@@ -15,12 +17,28 @@ public class DriverFactory {
 
         ChromeOptions options = new ChromeOptions();
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("profile.password_manager_leak_detection", false);
+        prefs.put("autofill.profile_enabled", false);
+        prefs.put("autofill.credit_card_enabled", false);
+        options.setExperimentalOption("prefs", prefs);
+
+        options.addArguments("--disable-features=PasswordLeakDetection,AutofillServerCommunication,PasswordCheck,PasswordManagerOnboarding");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--disable-infobars");
+
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-blink-features=AutomationControlled");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--guest");
 
         if (isHeadless()) {
             options.addArguments("--headless=new");
