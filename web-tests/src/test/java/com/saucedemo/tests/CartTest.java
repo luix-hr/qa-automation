@@ -19,13 +19,13 @@ class CartTest extends BaseTest {
         InventoryPage inventory = new LoginPage(driver)
                 .loginAs(ConfigManager.getStandardUser(), ConfigManager.getPassword());
 
-        inventory.addToCart("sauce-labs-backpack").waitForCartCount(1);
+        inventory.addToCart("sauce-labs-backpack");
         assertEquals(1, inventory.getCartCount());
 
-        inventory.addToCart("sauce-labs-bolt-t-shirt").waitForCartCount(2);
+        inventory.addToCart("sauce-labs-bolt-t-shirt");
         assertEquals(2, inventory.getCartCount());
 
-        inventory.addToCart("sauce-labs-onesie").waitForCartCount(3);
+        inventory.addToCart("sauce-labs-onesie");
         assertEquals(3, inventory.getCartCount());
 
         CartPage cart = inventory.openCart();

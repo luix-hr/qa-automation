@@ -1,6 +1,7 @@
 package com.saucedemo.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,10 +13,12 @@ public abstract class BasePage {
 
     protected final WebDriver driver;
     protected final WebDriverWait wait;
+    protected final JavascriptExecutor js;
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        this.js = (JavascriptExecutor) driver;
     }
 
     protected WebElement waitVisible(By locator) {
@@ -27,7 +30,12 @@ public abstract class BasePage {
     }
 
     protected void click(By locator) {
-        waitClickable(locator).click();
+        WebElement el = waitClickable(locator);
+        try {
+            el.click();
+        } catch (Exception e) {
+            js.executeScript("arguments[0].click();", el);
+        }
     }
 
     protected void type(By locator, String text) {

@@ -21,8 +21,7 @@ class CheckoutE2ETest extends BaseTest {
         assertTrue(inventory.isLoaded());
 
         inventory.addToCart("sauce-labs-backpack")
-                .addToCart("sauce-labs-bike-light")
-                .waitForCartCount(2);
+                .addToCart("sauce-labs-bike-light");
         assertEquals(2, inventory.getCartCount());
 
         CartPage cart = inventory.openCart();

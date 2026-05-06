@@ -8,11 +8,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class InventoryPage extends BasePage {
 
     private final By title = By.cssSelector(".title");
+    private final By inventoryContainer = By.id("inventory_container");
     private final By cartBadge = By.cssSelector(".shopping_cart_badge");
     private final By cartLink = By.cssSelector(".shopping_cart_link");
 
     public InventoryPage(WebDriver driver) {
         super(driver);
+        wait.until(ExpectedConditions.urlContains("inventory.html"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(inventoryContainer));
     }
 
     public boolean isLoaded() {
@@ -20,26 +23,22 @@ public class InventoryPage extends BasePage {
     }
 
     public InventoryPage addToCart(String productName) {
-        String id = "add-to-cart-" + productName.toLowerCase().replace(" ", "-");
-        click(By.id(id));
+        String slug = productName.toLowerCase().replace(" ", "-");
+        By addBtn = By.id("add-to-cart-" + slug);
+        By removeBtn = By.id("remove-" + slug);
+
+        click(addBtn);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(removeBtn));
         return this;
     }
 
     public int getCartCount() {
         try {
-            return Integer.parseInt(driver.findElement(cartBadge).getText());
+            String txt = driver.findElement(cartBadge).getText().trim();
+            return txt.isEmpty() ? 0 : Integer.parseInt(txt);
         } catch (NoSuchElementException e) {
             return 0;
         }
-    }
-
-    public InventoryPage waitForCartCount(int expected) {
-        if (expected == 0) {
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(cartBadge));
-        } else {
-            wait.until(ExpectedConditions.textToBe(cartBadge, String.valueOf(expected)));
-        }
-        return this;
     }
 
     public CartPage openCart() {

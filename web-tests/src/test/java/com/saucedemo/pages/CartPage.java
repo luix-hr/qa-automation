@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class CartPage extends BasePage {
 
-    private final By cartList = By.cssSelector(".cart_list");
+    private final By title = By.cssSelector(".title");
     private final By cartItems = By.cssSelector(".cart_item");
     private final By itemNames = By.cssSelector(".inventory_item_name");
     private final By checkoutButton = By.id("checkout");
@@ -17,7 +17,7 @@ public class CartPage extends BasePage {
     public CartPage(WebDriver driver) {
         super(driver);
         wait.until(ExpectedConditions.urlContains("cart.html"));
-        wait.until(ExpectedConditions.presenceOfElementLocated(cartList));
+        wait.until(ExpectedConditions.textToBe(title, "Your Cart"));
     }
 
     public int getItemCount() {
